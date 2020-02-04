@@ -1,0 +1,172 @@
+.content{
+    flex-grow: 1;
+    position: relative;
+    overflow-y: auto;
+    outline: none;
+}
+
+.board{
+   
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.board1{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-right: 0;
+}
+.boardheader{
+    height: auto;
+    padding: 8px 4px 4px 8px;
+    position: relative;
+}
+
+.welcometxt{
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 32px;
+    padding: 0;
+    text-decoration: none;
+    max-width: calc(100% - 24px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 3px;
+    color: #fff;
+    float: left;
+    margin: 0 4px 4px 0;
+    position: relative;
+}
+
+.welcomespan{
+    padding: 0 12px;
+}
+
+.star{
+    border-radius: 3px;
+    color: #fff;
+    cursor: default;
+    float: left;
+    font-size: 14px;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 4px 4px 0;
+    overflow: hidden;
+    padding-left: 32px;
+    position: relative;
+    text-decoration: none;
+}
+.staricon{
+    background-clip: content-box;
+    background-origin: content-box;
+    color: #fff;
+    padding: 6px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    font-size: 16px;
+    line-height: 20px;
+    width: 20px;
+}
+
+.twobox{
+    position: relative;
+    float: left;
+}
+
+.twoboxleft{
+    position: relative;
+    display: block;
+    float: left;
+}
+.divider{
+    float: left;
+    border-left: 1px solid hsla(0,0%,100%,.24);
+    height: 16px;
+    margin: 8px 8px 12px 4px;
+}
+.personal{
+    border-radius: 3px;
+    color: #fff;
+    cursor: default;
+    float: left;
+    font-size: 14px;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 4px 4px 0;
+    overflow: hidden;
+    padding-left: 32px;
+    position: relative;
+    text-decoration: none;
+    padding-left: 12px;
+}
+.personaltxt{
+    padding-right: 12px;
+    color: white;
+    font-size: 14px;
+    line-height: 32px;
+}
+
+.privateicon{
+    background-clip: content-box;
+    background-origin: content-box;
+    color: #fff;
+    padding: 6px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    font-size: 16px;
+    line-height: 20px;
+    width: 20px;
+    display: inline-block;
+    font-family: trellicons;
+    font-style: normal;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: bottom;
+}
+
+.personaltxt{
+    padding-right: 12px;
+    color: white;
+    font-size: 14px;
+    line-height: 32px;
+    padding-left: 20px;
+}
+
+.invitetxt{
+    padding-right: 12px;
+    color: white;
+    font-size: 14px;
+    line-height: 32px;
+}
+
+.rightbox{
+    float:right;
+    position: relative;
+    display: block;
+
+}
+
+.addgreen{
+    font-size: 10px;
+}
+
+.flex-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* #div1 {
+    width: 350px;
+    height: 70px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+  } */
