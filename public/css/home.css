@@ -1,13 +1,13 @@
 .wholebody{
     height: 100%;
-    position: relative;
+    /* position: relative; */
     z-index: 1;
     overflow: hidden;
 }
 
 .insidewholebody{
     height: 100%;
-    position: relative;
+    /* position: relative; */
     z-index: 0;
 }
 

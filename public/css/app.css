@@ -73,6 +73,12 @@ body {
   color: #212529;
   text-align: left;
   background-color: rgb(75, 191, 107);
+  /* background-image: url("../storage/cover_images/download_1580884798.jpeg") ; */
+  /* height: 500px; */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* position: relative; */
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
