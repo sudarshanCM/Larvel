@@ -20,7 +20,8 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    </head>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
     <body style="background-image:url({{asset('storage/cover_images').'/'.$image[0]->cover_image}})">
         
      <div class="wholebody">
@@ -161,12 +162,28 @@
                                         <div id ="<?php echo $list->_id?>" class="card-body" ondrop="drop(event)" ondragover="allowDrop(event)">
                                 
                                             @foreach($contents as $content)
+                                            {{-- {{dump($content->content)}} --}}
                                             @if ($list->_id == $content->list_id)
-                                            
-                                        <textarea id="<?php echo $content->_id?>" name="<?php echo $list->_id?>" draggable="true" ondragstart="drag(event)" data-toggle="modal" 
-                                            data-target="#exampleModal<?php echo $content->_id?>">{{$content->content}}</textarea>
-                                       
-                                          
+                                            {{-- onclick="window.location='{{ route("index.getdesc",array( $content->_id)) }}'" --}}
+                                            <div class="cardcontain">
+                                            <textarea  id="<?php echo $content->_id?>" name="<?php echo $list->_id?>" draggable="true" ondragstart="drag(event)" data-toggle="modal" 
+                                                data-target="#exampleModal<?php echo $content->_id?>" class="mod">{{$content->content}}</textarea>
+                                                <div class="dropdown">
+                                                    <button class="btn btn-primary dropdown-toggle carddropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    edit
+                                                     </button>
+                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                <label for="sel1">Move To</label>
+                                                <select class="form-control" id="sel1<?php echo $content->_id?> " onchange="changeFunc(this);">
+                                                    @foreach($lists as $list)
+                                                <option value="{{$list->name}}" selected>{{$list->name}}</option>
+                                                   @endforeach
+                                                  </select>
+                                                  <a href="{{route('index.deleteCard', ['id' => $content->_id])}}" class="dropdown-item">Delete</a>
+                                                 
+                                                </div>
+                                                    </div>
+                                                </div>
                                           <!-- Modal -->
                                           <div class="modal fade" id="exampleModal<?php echo $content->_id?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -183,34 +200,102 @@
                                                       <div>
                                                           Description
                                                           &nbsp;
-                                                          <a href="#" style="background-color: rgba(9,30,66,.04);border-radius: 3px;line-height: 20px;padding: 6px 12px;color:black;">Edit</a>
+                                                          {{-- <a href="#" style="background-color: rgba(9,30,66,.04);border-radius: 3px;line-height: 20px;padding: 6px 12px;color:black;">Edit</a> --}}
                                                       </div>
                                                       <div>
+                                                        {{-- @php ($names = []) @endphp --}}
                                                         <form action="{{route('index.adddescription',$content->_id)}}" method="post">
                                                             @csrf
-                                                          <a id="descbtn<?php echo $content->_id?>" class="description" style="background-color: rgba(9,30,66,.04);">Add a more detailed description</a>
+                                                            
+                                                             @foreach($descs as $desc)
+                                                             @if($content->_id == $desc->content_id)
+                                                             @php $status1='0'; @endphp
+                                                             @break
+                                                             @else
+                                                             @php $status1='1'; @endphp
+                                                             @endif
+                                                             @endforeach
+                                                             @if($status1=='0')
+                                                             <a id="descbtn<?php echo $content->_id?>" class="description" style="background-color: rgba(9,30,66,.04);">{{$desc->description}}</a>
+                                                             <textarea id="textarea<?php echo $content->_id?>" placeholder="Add a more detailed description.." name="description"></textarea>
+                                                             
+                                                             <div></div>
+                                                             @else
+                                                             <a id="descbtn<?php echo $content->_id?>" class="description" style="background-color: rgba(9,30,66,.04);">Add a more detailed description</a>
                                                           <textarea id="textarea<?php echo $content->_id?>" placeholder="Add a more detailed description.." name="description"></textarea>
                                                           <div></div>
+                                                          @endif
+                                                            {{-- @php $status='0'; @endphp
+                                                            @php $status1='0'; @endphp
+                                                             @foreach($names as $name)
+                                                             @if($name==$desc->content_id)
+                                                             @php $status='1'; @endphp
+                                                             @endif --}}
+                                                             {{-- @endforeach --}}
+                                                            {{-- @if($content->_id == $desc->content_id)--}}
+                                                            
+                                                            
+                                                            {{-- <div></div> --}} 
+                                                            {{-- @php array_push($names,$content->id) @endphp --}}
+                                                            {{-- @php $status1='1'; @endphp --}}
+                                                          {{-- @endif
+                                                          @endforeach                                                  --}}
+                                                          {{-- @if($status1=='0') --}}
+                                                          
+                                                          {{-- <div></div> --}} 
+                                                          {{-- @endif --}}
                                                           <div style="display:inline-flex">
                                                           <button id="save<?php echo $content->_id?>" class="btn btn-success" type="submit">Save</button>
                                                           &nbsp;
-                                                          <button id="close<?php echo $content->_id?>" class="btn close">Close</button>
+                                                          <button id="close<?php echo $content->_id?>" class="btn close1">Close</button>
                                                           </div>
+                                                        
                                                         </form>
                                                     </div>
                                                     <div>
-                                                        Des
+                                                        Activity
                                                     </div>
                                                     <div>
-                                                        DES
+                                                        <form action="{{route('index.addcomment',$content->_id)}}" method="post">
+                                                            @csrf
+                                                             @foreach($comments as $comment)
+                                                             
+                                                            @if($content->_id == $comment->content_id)
+                             
+                                                        <a id="commb<?php echo $content->_id?>" class="comment" style="background-color: rgba(9,30,66,.04);">{{$comment->comment}}</a>
+                                                          <textarea id="commarea<?php echo $content->_id?>" placeholder="Write a comment.." name="comment">{{$comment->comment}}</textarea>
+                                                          <div></div>
+                                                         
+                                                          @endif
+                                                         @endforeach
+                                                          <a id="commbtn1<?php echo $content->_id?>" class="comment1" style="background-color: rgba(9,30,66,.04);">Write a comment...</a>
+                                                          <textarea id="commarea1<?php echo $content->_id?>" placeholder="Write a comment.." name="comment"></textarea>
+                                                          <div></div>
+                                                          
+                                                          <div style="display:inline-flex">
+                                                            <button id="commsave1<?php echo $content->_id?>" class="btn btn-success" type="submit">Save</button>
+                                                            &nbsp;
+                                                            <button id="commclose1<?php echo $content->_id?>" class="btn commclose1">Close</button>
+                                                            </div>
+                                                            
+                                                        </form>
                                                     </div>
                                                   </div>
                                                   <div class="col-sm-3">
-                                                    <div>
-                                                        DES
+                                                    <div style="font-size:13px">
+                                                       ADD TO CARD
                                                     </div>
-                                                    <div>
-                                                        DES
+                                                    &nbsp;
+                                                    <div style="font-size:13px">
+                                                        <a href="#" style="background-color: rgba(9,30,66,.04);border-radius: 3px;line-height: 5px;padding: 6px 12px;color:black;">Members</a> 
+                                                    </div>
+                                                    &nbsp;
+                                                    <div style="font-size:13px">
+                                                        <a href="#" style="background-color: rgba(9,30,66,.04);border-radius: 3px;line-height: 20px;padding: 6px 12px;color:black;">Labels</a> 
+                                                    </div>
+                                                    &nbsp;
+                                                    <div style="font-size:13px">
+                                                        <a href="#" style="background-color: rgba(9,30,66,.04);border-radius: 3px;line-height: 20px;padding: 6px 12px;color:black;">CheckList</a> 
                                                     </div>
 
                                                   </div>
@@ -279,12 +364,89 @@
      </div>
     
     </body>
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+ 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    {{-- <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> --}}
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript">
+
+
+    function changeFunc(sel){
+    var id = sel.id
+    var orgid = id.replace('sel1', '');
+        var optionvalue = sel.value;
+        $.ajax({
+  
+  type:"PUT",
+  url:'/moveCard/',
+  data: { _token: '{{csrf_token()}}',content_id:orgid,list_name:optionvalue },
+  success:function(response){
+    window.location.reload();
+      console.log(response);
+  },
+  error:function(error){
+      console.log(error);
+  }
+  
+})
+
+console.log(orgid);
+console.log(optionvalue);
+    }
+$('document').ready(function($) {
+ 
+
+$(".mod").click(function(e){
+    var id= e.target.id;
+    $.ajax({
+  
+     type:"PUT",
+     url:'/desc/'+id,
+     data: { _token: '{{csrf_token()}}' },
+     success:function(response){
+        $("#textarea"+id).val(response[0].description);
+         console.log(response[0].description);
+     },
+     error:function(error){
+         console.log(error);
+     }
+     
+ })
+    
+console.log("#exampleModal"+e.target.id);
+    // $("#exampleModal"+e.target.id).modal();
+
+});
+});
      $('[id^="textcard"],[id^="addcard"],[id^="cancelcard"]').hide();
      $('[id^="textarea"],[id^="save"],[id^="close"]').hide();
+     $('[id^="commarea"],[id^="commsave"],[id^="commclose"]').hide();
+     $('[id^="commarea1"],[id^="commsave1"],[id^="commclose1"]').hide();
     // $(document).ready(function(){
         // $('textarea[name="cardname"],button[name="cardadd"],button[name="cardcancel"]').hide();
+        $(".comment").click(function(e){
+            $.id= e.target.id;
+            $.id1 = e.target.id.replace('commbtn', '');
+            var input = $("#commarea"+$.id1);
+            var input1 = $("#commsave"+$.id1);
+            var input2 = $("#commclose"+$.id1);
+            $("#"+$.id).hide();
+            input.show();
+    input1.show();
+    input2.show();
+        })
+        $(".comment1").click(function(e){
+            $.id= e.target.id;
+            $.id1 = e.target.id.replace('commbtn1', '');
+            var input = $("#commarea1"+$.id1);
+            var input1 = $("#commsave1"+$.id1);
+            var input2 = $("#commclose1"+$.id1);
+            $("#"+$.id).hide();
+            input.show();
+    input1.show();
+    input2.show();
+        })
         $(".description").click(function(e){
             $.id= e.target.id;
             $.id1 = e.target.id.replace('descbtn', '');
@@ -297,7 +459,35 @@
     input2.show();
 
         })
-        $(".close").click(function(e){
+        $(".commclose1").click(function(e){
+            $.id= e.target.id;
+            $.id1 = e.target.id.replace('commclose1', '');
+            var input = $("#commarea1"+$.id1);
+            var input1 = $("#commsave1"+$.id1);
+            var input2 = $("#commbtn1"+$.id1);
+
+            $("#"+$.id).hide();
+            input.hide();
+    input1.hide();
+    input2.show();
+    
+
+        })
+        $(".commclose").click(function(e){
+            $.id= e.target.id;
+            $.id1 = e.target.id.replace('commclose', '');
+            var input = $("#commarea"+$.id1);
+            var input1 = $("#commsave"+$.id1);
+            var input2 = $("#commbtn"+$.id1);
+
+            $("#"+$.id).hide();
+            input.hide();
+    input1.hide();
+    input2.show();
+    
+
+        })
+        $(".close1").click(function(e){
             $.id= e.target.id;
             $.id1 = e.target.id.replace('close', '');
             var input = $("#textarea"+$.id1);

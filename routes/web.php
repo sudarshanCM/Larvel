@@ -41,3 +41,8 @@ Route::post('/addcard/{_id}','PostsController@addcard')->name('index.addcard');
 Route::get('/update/{to}/{from}/{target}','PostsController@update')->name('index.update');
 Route::post('/image/{_id}','PostsController@image')->name('index.addimage');
 Route::post('/description/{_id}','PostsController@description')->name('index.adddescription');
+Route::post('/comment/{_id}','PostsController@comment')->name('index.addcomment');
+// Route::get('/getdesc/{_id}','PostsController@getdesc')->name('index.getdesc');
+Route::put('desc/{id}','PostsController@desc')->name('index.desc');
+Route::put('moveCard/','PostsController@move')->name('index.move');
+Route::get('deleteCard/{id}','PostsController@deleteCard')->name('index.deleteCard');

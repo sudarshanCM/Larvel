@@ -7,6 +7,7 @@ use App\Lists;
 use App\CardContent;
 use App\Background;
 use App\Description;
+use App\Comment;
 use Illuminate\Support\Fascades\Storage;
 use Illuminate\Filesystem\Filesystem;
 class PostsController extends Controller
@@ -82,14 +83,58 @@ if($data){
         
 
     }
+public function desc(Request $request,$_id){
+    $org =  Description::where('content_id', $_id)->get();
+    return $org;
+}
+    public function comment(Request $request,$_id){
+        $data = new Comment();
+        $data->content_id = $_id;
+        $data->comment = $request->comment;
+        $data->save();
+        if($data){
+            return back();
+        }
 
+    }
+
+    // public function getdesc(Request $request,$_id){
+    //     $org =  Description::where('content_id', $_id)->get();
+    //     // $this->home();
+        
+    //     return view('index',compact('org'));
+    //     // return $org;
+    //     // return back();
+        
+        
+    // }
+
+    public function move(Request $request){
+
+        $content_id=$request->content_id;
+        $name=$request->list_name;
+        $list_id =  Lists::where('name', $name)->get();
+        $findcard = CardContent::findOrFail($request->content_id);
+        $findcard->list_id = $list_id[0]->_id;
+        $findcard->save();
+        return $this->home();
+    }
+
+public function deleteCard(Request $request,$_id){
+    $deleteCard =  CardContent::where('_id', $_id)->get()->each->delete();
+    return back();
+
+}
 
     public function home(){
         $lists = Lists::all();
         $contents = CardContent::all();
         $image = Background::all();
+        $descs = Description::all();
+        $comments = Comment::all();
+        // dd($descs[0]->content_id);
         // dd($image[0]->cover_image);
-        return view('index',compact('lists','contents','image'));
+        return view('index',compact('lists','contents','image','descs','comments'));
     }
     public function add(Request $request){
         // dd($request->name);
