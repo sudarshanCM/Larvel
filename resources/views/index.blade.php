@@ -7,6 +7,8 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 {{-- <script type="text/javascript" src="{{asset('css/bootstrap.js')}}"></script> --}}
@@ -170,7 +172,7 @@
                                                 data-target="#exampleModal<?php echo $content->_id?>" class="mod">{{$content->content}}</textarea>
                                                 <div class="dropdown">
                                                     <button class="btn btn-primary dropdown-toggle carddropdown" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    edit
+                                                        <i class="fa fa-edit"></i>
                                                      </button>
                                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                 <label for="sel1">Move To</label>
@@ -364,7 +366,6 @@
      </div>
     
     </body>
- 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
     {{-- <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> --}}

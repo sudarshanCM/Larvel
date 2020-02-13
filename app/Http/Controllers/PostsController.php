@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Lists;
+use App\User;
 use App\CardContent;
 use App\Background;
 use App\Description;
 use App\Comment;
+use App\Notifications\CardMoved;
 use Illuminate\Support\Fascades\Storage;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Notifications\Notifiable;
+use Mail;
+use App\Events\NewCard;
+use App\Events\ShoutOut;
 class PostsController extends Controller
 {
+    use Notifiable;
     //
     public function retrieve(){
 
@@ -24,6 +31,16 @@ class PostsController extends Controller
         $data->list_id = $_id;
     //    dd($data);
 $data->save();
+// dd($data);
+event(new ShoutOut($data));
+
+// $data1 = array('content' => $request->content);
+// Mail::send ( 'email', $data1,function ($message) {
+        
+//     $message->from ( 'sudarshan@codingmart.com', 'Just Laravel' );
+    
+//     $message->to ( 'sudarshan@codingmart.com' )->subject ( 'Just Laravel demo email using SendGrid' );
+// } );
 
 if($data){
     return back();
@@ -126,7 +143,18 @@ public function deleteCard(Request $request,$_id){
 
 }
 
+public function admin(){
+    broadcast(new ShoutOut('somedata'));
+    return view('admin');
+}
+
     public function home(){
+
+        // $user = User::find(0);
+        // dd($user);
+        // $user = User::first();
+        // $user->notify(new CardMoved);
+
         $lists = Lists::all();
         $contents = CardContent::all();
         $image = Background::all();

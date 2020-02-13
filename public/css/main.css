@@ -198,3 +198,9 @@
   /* <textarea  id="<?php echo $content->_id?>" name="<?php echo $list->_id?>" draggable="true" ondragstart="drag(event)" data-toggle="modal" 
                                             data-target="#exampleModal<?php echo $content->_id?>">{{$content->content}}</textarea>
                                         */
+
+
+.card-body{
+    height: 140px;
+    overflow: scroll;
+}

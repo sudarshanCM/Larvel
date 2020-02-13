@@ -6,7 +6,9 @@
                     <div class="card-header">Example Component</div>
 
                     <div class="card-body">
-                        I'm an example component.
+                        <form v-on:submit.prevent="handleSubmit">
+                        <input type="text" v-model="message">
+                        </form>
                     </div>
                 </div>
             </div>
@@ -17,7 +19,22 @@
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.')
+            console.log("mounted");
+            window.Echo.private('chat').listen('.Shoutout',(event)=>{
+                console.log('event',event);
+                alert(event.message);
+            })
+        },
+        data(){
+            return {
+                message:''
+            }
+        },
+        methods:{
+            handleSubmit(){
+                let postData = {'message':'data'};
+                window.axios.post('/api/shoutout',postData).then(response=>console.log('response',response)); 
+            }
         }
     }
 </script>

@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::middleware('cors2')->group(function(){
+    //your_routes
+    Route::post('shoutout',function(Request $request){
+        $message = $request->input('message');
+        broadcast(new ShoutOut($message))->toOthers();
+        return response([],200);
+    });
+ });

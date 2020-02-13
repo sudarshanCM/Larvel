@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'PostsController@home')->name('home');
-  
+Route::get('/admin','PostsController@admin')->name('admin');  
 
 
 
@@ -30,6 +30,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
 
 Auth::routes();
 
