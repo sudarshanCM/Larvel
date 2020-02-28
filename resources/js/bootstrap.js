@@ -1,4 +1,4 @@
-window._ = require('lodash');
+window._ = require("lodash");
 
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
@@ -7,10 +7,10 @@ window._ = require('lodash');
  */
 
 try {
-    window.Popper = require('popper.js').default;
-    window.$ = window.jQuery = require('jquery');
+    window.Popper = require("popper.js").default;
+    window.$ = window.jQuery = require("jquery");
 
-    require('bootstrap');
+    require("bootstrap");
 } catch (e) {}
 
 /**
@@ -19,9 +19,9 @@ try {
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = require('axios');
+window.axios = require("axios");
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -29,41 +29,60 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * allows your team to easily build robust real-time web applications.
  */
 
-import Echo from 'laravel-echo';
+import Echo from "laravel-echo";
 
-window.Pusher = require('pusher-js');
+window.Pusher = require("pusher-js");
 
 window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: '88b46fc61e089709e692',
+    broadcaster: "pusher",
+    key: "88b46fc61e089709e692",
     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
     // encrypted: false,
     wsHost: window.location.hostname,
     wsPort: 6001,
     disableStats: true,
-    enabledTransports: ['ws', 'wss'],
-    
+    // encrypted: true,
+    enabledTransports: ["ws", "wss"],
+    // forceTLS: true,
+    // auth: {
+    //     headers: {
+    //       'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    //     }
+    //   }
+    auth: {
+        headers: {
+            "X-CSRF-Token": document.head.querySelector(
+                'meta[name="csrf-token"]'
+            )
+        }
+    }
+    // authEndpoint: '/pusher/auth'
 });
 
 Pusher.log = function(message) {
-   console.log("S",message);
-  };
+    console.log("S", message);
+};
 //   var pusher = new Pusher('88b46fc61e089709e692');
 //   pusher.connection.bind( 'error', function( err ) {
 //     if( err.error.data.code === 4004 ) {
 //       log('>>> detected limit error');
 //     }
 //   });
-var pusher = new Pusher('88b46fc61e089709e692',{
-    cluster: 'ap2'
-});
-var channel = pusher.subscribe('Chat');
-channel.bind('Channels',
-  function(data) {
-      console.log("HI",data);
-    // add new price into the APPL widget
-  }
-);
+// var pusher = new Pusher('88b46fc61e089709e692',{
+//     cluster: 'ap2'
+// });
+// var channel = pusher.subscribe('ProjectChannel',function(){
+//   console.log("jjj");
+// });
+// // channel.bind('pusher:subscription_succeeded', function(members) {
+// //   alert('successfully subscribed!',members);
+// // });
+// channel.bind('Project',
+//   function(data) {
+//       console.log("HI",data);
+//     // add new price into the APPL widget
+//   }
+// );
 
 // window.Echo.channel('Chat')
 // .listen('.Channels',(card)=>{

@@ -11,10 +11,10 @@
 |
 */
 
-Route::get('/', 'PostsController@home')->name('home');
+Route::get('/', 'PostsController@login')->name('login');
 Route::get('/admin','PostsController@admin')->name('admin');  
 
-
+Route::get('/home1', 'PostsController@home')->name('home');
 
 Route::get('/users/{id}',function($id){
 return 'This is user'.$id;
@@ -36,6 +36,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('/project', 'PostsController@project')->name('index.project');
+
 Route::get('/listname','PostsController@retrieve')->name('index.listname');
 Route::post('/addname','PostsController@add')->name('index.add');
 Route::post('/addcard/{_id}','PostsController@addcard')->name('index.addcard');
@@ -47,3 +49,10 @@ Route::post('/comment/{_id}','PostsController@comment')->name('index.addcomment'
 Route::put('desc/{id}','PostsController@desc')->name('index.desc');
 Route::put('moveCard/','PostsController@move')->name('index.move');
 Route::get('deleteCard/{id}','PostsController@deleteCard')->name('index.deleteCard');
+Route::get('deleteList/{id}/{name}','PostsController@deleteList')->name('index.deleteList');
+Route::get('/cardname','PostsController@cardname')->name('index.cardname');
+Route::post('/addProject','PostsController@addProject')->name('index.addProject');
+Route::get('/myProjects','PostsController@myProjects')->name('index.myProjects');
+Route::post('/addaccess','PostsController@addaccess')->name('index.addaccess');
+Route::post('/deleteaccess/{projectName}/{userName}/{access_id}','PostsController@deleteaccess')->name('index.deleteaccess');
+Route::post('pusher/auth', 'PostsController@authorizeUser');

@@ -5,7 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">{{ __('Register') }}
+              
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
@@ -39,7 +41,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="role" class="col-md-4 control-label">role</label>
+                            <label for="role" class="col-md-4 col-form-label text-md-right">Role</label>
                             
                             <div class="col-md-6">
                                 <select id="role" name="role" class="form-control">
@@ -54,6 +56,26 @@
                             @endif
                             </div>
                             </div>
+
+
+                            <div class="form-group row">
+                                <label for="project" class="col-md-4 col-form-label text-md-right">Project</label>
+                                
+                                <div class="col-md-6">
+                                    <select id="project" name="project" class="form-control">
+                                        <option value="Project 1">Project 1</option>
+                                        <option value="Project 2">Project 2</option>
+                                    </select>
+                                
+                                @if ($errors->has('project'))
+                                <span class="help-block">
+                                <strong>{{ $errors->first('project') }}</strong>
+                                </span>
+                                @endif
+                                </div>
+                                </div>
+                                
+
                         <div class="form-group row">
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
@@ -83,6 +105,45 @@
                                 </button>
                             </div>
                         </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <h2>Add a Project</h2>
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <div class="form-group row">
+                            <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row">
+                            <label for="role" class="col-md-4 col-form-label text-md-right">Read Access</label>
+                            
+                            <div class="col-md-6">
+                                <select id="role" name="role" class="form-control">
+                                    <option value="user">User</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            
+                            @if ($errors->has('role'))
+                            <span class="help-block">
+                            <strong>{{ $errors->first('role') }}</strong>
+                            </span>
+                            @endif
+                            </div>
+                            </div>
                     </form>
                 </div>
             </div>

@@ -25,6 +25,7 @@ class CardMoved extends Notification
     public function __construct(CardContent $data)
     {  
         $this->data = $data;
+        // dd($data->content);
     }
 
     /**
@@ -33,13 +34,13 @@ class CardMoved extends Notification
      * @param  mixed  $notifiable
      * @return array
      */
-    protected $connection1 = 'mongodb';
+    // protected $connection1 = 'mongodb';
     public function via($notifiable)
     {
         // DB::connection('mongodb')->getMongoDB()->connected;
         
-        // return ['database'];
-        return config('database.default');
+        return ['broadcast'];
+        // return config('database');
         // return $this->$connection1;
     }
 

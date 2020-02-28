@@ -8,6 +8,8 @@
 <body>
 Hi ,
 <br>
+     You have been assigned a card by {{$assignedBy}}
+<br>
      The card created was {{$content}}
 <br>
 Best Regards
